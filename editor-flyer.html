@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✨ Editor de Flyer PRO - PUBLIFLY</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #fff4fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  header {
+    background: linear-gradient(90deg, #ff5db1, #ff9ad5);
+    color: white;
+    text-align: center;
+    padding: 0.8rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(255, 90, 160, 0.3);
+    letter-spacing: 1px;
+  }
+
+  main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* 🔧 Panel de herramientas */
+  .toolbar {
+    width: 80px;
+    background: #fff;
+    border-right: 2px solid #ffd4ec;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+    gap: 10px;
+    box-shadow: 2px 0 5px rgba(255, 192, 224, 0.2);
+  }
+
+  .tool-btn {
+    background: #ffe6f4;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 20px;
+  }
+
+  .tool-btn:hover {
+    background: #ffb3da;
+    transform: scale(1.1);
+    color: white;
+  }
+
+  /* 🎨 Área de trabajo */
+  .canvas-area {
+    flex: 1;
+    background: #fff0f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  #flyerCanvas {
+    width: 800px;
+    height: 550px;
+    background: white;
+    border: 3px dashed #ff8fc7;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(255, 140, 180, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .element {
+    position: absolute;
+    cursor: move;
+    user-select: none;
+  }
+
+  .element img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  /* ⚙️ Propiedades */
+  .properties {
+    position: absolute;
+    bottom: 15px;
+    left: 90px;
+    right: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(255, 130, 190, 0.25);
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .properties input,
+  .properties select {
+    border: 1px solid #ffb3da;
+    border-radius: 6px;
+    padding: 6px;
+  }
+
+  .properties label {
+    font-size: 0.9rem;
+    margin-right: 6px;
+    color: #ff69b4;
+  }
+
+  footer {
+    text-align: center;
+    background: #ff8fc7;
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .pop {
+    animation: fadeIn 0.4s ease-in-out;
+  }
+
+  /* ✨ Botón de descarga */
+  #downloadFlyer {
+    background: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  #downloadFlyer:hover {
+    background: #ff47a4;
+  }
+</style>
+</head>
+<body>
+
+<header>🌸 Editor de Flyer PRO - PUBLIFLY 🌸</header>
+
+<main>
+  <!-- Barra de herramientas -->
+  <div class="toolbar">
+    <button class="tool-btn" id="addText" title="Agregar texto">🅰️</button>
+    <button class="tool-btn" id="addImage" title="Agregar imagen">🖼️</button>
+    <button class="tool-btn" id="addShape" title="Agregar figura">⬛</button>
+    <button class="tool-btn" id="clearCanvas" title="Limpiar">🗑️</button>
+    <button class="tool-btn" id="downloadFlyer" title="Descargar">⬇️</button>
+  </div>
+
+  <!-- Área de trabajo -->
+  <div class="canvas-area">
+    <div id="flyerCanvas"></div>
+    <div class="properties" id="propertiesPanel" style="display:none;">
+      <label>Color:</label><input type="color" id="propColor">
+      <label>Tamaño:</label><input type="number" id="propSize" min="10" max="200">
+      <label>Fuente:</label>
+      <select id="propFont">
+        <option value="Poppins">Poppins</option>
+        <option value="Montserrat">Montserrat</option>
+        <option value="Cursive">Cursive</option>
+      </select>
+    </div>
+  </div>
+</main>
+
+<footer>© 2025 PUBLIFLY — Diseña, crea y promociona con estilo.</footer>
+
+<!-- SCRIPTS -->
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+const canvas = document.getElementById('flyerCanvas');
+const propPanel = document.getElementById('propertiesPanel');
+let selectedElement = null;
+
+/* 🩷 AGREGAR TEXTO */
+document.getElementById('addText').onclick = () => {
+  const div = document.createElement('div');
+  div.className = 'element pop';
+  div.textContent = 'Texto nuevo';
+  div.style.fontSize = '28px';
+  div.style.color = '#000';
+  div.style.fontFamily = 'Poppins';
+  div.style.left = '100px';
+  div.style.top = '100px';
+  makeDraggable(div);
+  canvas.appendChild(div);
+  saveDesign();
+};
+
+/* 🌸 AGREGAR IMAGEN */
+document.getElementById('addImage').onclick = () => {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    const div = document.createElement('div');
+    div.className = 'element pop';
+    div.style.width = '200px';
+    div.appendChild(img);
+    div.style.left = '150px';
+    div.style.top = '150px';
+    makeDraggable(div);
+    canvas.appendChild(div);
+    saveDesign();
+  };
+  input.click();
+};
+
+/* 🟪 AGREGAR FIGURA */
+document.getElementById('addShape').onclick = () => {
+  const shape = document.createElement('div');
+  shape.className = 'element pop';
+  shape.style.width = '120px';
+  shape.style.height = '120px';
+  shape.style.background = '#ff69b4';
+  shape.style.borderRadius = '12px';
+  shape.style.left = '200px';
+  shape.style.top = '200px';
+  makeDraggable(shape);
+  canvas.appendChild(shape);
+  saveDesign();
+};
+
+/* 🧽 LIMPIAR CANVAS */
+document.getElementById('clearCanvas').onclick = () => {
+  if (confirm('¿Seguro que quieres limpiar el flyer?')) {
+    canvas.innerHTML = '';
+    localStorage.removeItem('flyerPRO');
+  }
+};
+
+/* 📥 DESCARGAR COMO IMAGEN */
+document.getElementById('downloadFlyer').onclick = () => {
+  html2canvas(canvas).then(canvasImage => {
+    const link = document.createElement('a');
+    link.download = 'PUBLIFLY-flyer.png';
+    link.href = canvasImage.toDataURL();
+    link.click();
+  });
+};
+
+/* 🧲 FUNCIÓN PARA MOVER ELEMENTOS */
+function makeDraggable(el) {
+  el.addEventListener('mousedown', startDrag);
+  el.addEventListener('click', () => selectElement(el));
+  function startDrag(e) {
+    let offsetX = e.clientX - el.offsetLeft;
+    let offsetY = e.clientY - el.offsetTop;
+    document.onmousemove = ev => {
+      el.style.left = ev.clientX - offsetX + 'px';
+      el.style.top = ev.clientY - offsetY + 'px';
+    };
+    document.onmouseup = () => {
+      document.onmousemove = null;
+      saveDesign();
+    };
+  }
+}
+
+/* 🎨 PROPIEDADES */
+function selectElement(el) {
+  selectedElement = el;
+  propPanel.style.display = 'flex';
+  if (el.style.color) document.getElementById('propColor').value = rgbToHex(el.style.color);
+  if (el.style.fontSize) document.getElementById('propSize').value = parseInt(el.style.fontSize);
+  if (el.style.fontFamily) document.getElementById('propFont').value = el.style.fontFamily;
+}
+
+document.getElementById('propColor').oninput = e => {
+  if (selectedElement) selectedElement.style.color = e.target.value;
+  saveDesign();
+};
+document.getElementById('propSize').oninput = e => {
+  if (selectedElement) selectedElement.style.fontSize = e.target.value + 'px';
+  saveDesign();
+};
+document.getElementById('propFont').onchange = e => {
+  if (selectedElement) selectedElement.style.fontFamily = e.target.value;
+  saveDesign();
+};
+
+/* 💾 GUARDADO AUTOMÁTICO */
+function saveDesign() {
+  localStorage.setItem('flyerPRO', canvas.innerHTML);
+}
+
+/* 📂 CARGAR SI EXISTE */
+window.onload = () => {
+  const saved = localStorage.getItem('flyerPRO');
+  if (saved) {
+    canvas.innerHTML = saved;
+    document.querySelectorAll('.element').forEach(el => makeDraggable(el));
+  }
+};
+
+/* 🧮 Convertir color RGB a HEX */
+function rgbToHex(rgb) {
+  if (!rgb) return '#000000';
+  const nums = rgb.match(/\d+/g);
+  return '#' + nums.map(x => ('0' + parseInt(x).toString(16)).slice(-2)).join('');
+}
+</script>
+</body>
+</html>

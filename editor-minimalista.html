@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor - Plantilla Minimalista</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9fafb;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #3f51b5;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    main.editor {
+      display: flex;
+      gap: 2rem;
+      padding: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    form {
+      flex: 1;
+      max-width: 380px;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    form label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    form input, form textarea, form select {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      background: #3f51b5;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #2c3e9f;
+    }
+
+    .preview {
+      flex: 1;
+      max-width: 450px;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview img {
+      max-width: 100%;
+      border-radius: 1rem;
+    }
+
+    .preview h3 {
+      margin-top: 1rem;
+      font-size: 1.6rem;
+    }
+
+    .preview p {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Editor de Plantilla Minimalista</h1>
+    <nav>
+      <a href="index.html">← Volver a PUBLIFLY</a>
+    </nav>
+  </header>
+
+  <main class="editor">
+    <form id="minimalistaForm">
+      <h2>Personaliza tu Plantilla</h2>
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" placeholder="Escribe un título elegante">
+
+      <label for="descripcion">Descripción:</label>
+      <textarea id="descripcion" placeholder="Agrega tu texto o mensaje principal"></textarea>
+
+      <label for="color">Color principal:</label>
+      <input type="color" id="color" value="#3f51b5">
+
+      <label for="fondo">Color de fondo:</label>
+      <input type="color" id="fondo" value="#ffffff">
+
+      <label for="fuente">Tipo de letra:</label>
+      <select id="fuente">
+        <option value="Poppins">Poppins</option>
+        <option value="Roboto">Roboto</option>
+        <option value="Montserrat">Montserrat</option>
+        <option value="Open Sans">Open Sans</option>
+        <option value="Lato">Lato</option>
+      </select>
+
+      <label for="imagen">Agregar imagen PNG o JPG:</label>
+      <input type="file" id="imagen" accept="image/png, image/jpeg">
+
+      <button type="button" id="actualizar">Actualizar vista</button>
+    </form>
+
+    <div class="preview" id="preview">
+      <img id="previewImg" src="" alt="" style="display:none;">
+      <h3 id="previewTitulo">Título de ejemplo</h3>
+      <p id="previewDescripcion">Aquí irá el texto que agregues en la plantilla.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 PUBLIFLY - Editor Plantilla Minimalista</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('minimalistaForm');
+    const preview = document.getElementById('preview');
+    const titulo = document.getElementById('previewTitulo');
+    const descripcion = document.getElementById('previewDescripcion');
+    const imagen = document.getElementById('imagen');
+    const previewImg = document.getElementById('previewImg');
+
+    document.getElementById('actualizar').addEventListener('click', () => {
+      titulo.textContent = document.getElementById('titulo').value || 'Título de ejemplo';
+      descripcion.textContent = document.getElementById('descripcion').value || 'Aquí irá el texto que agregues en la plantilla.';
+
+      preview.style.backgroundColor = document.getElementById('fondo').value;
+      titulo.style.color = document.getElementById('color').value;
+      descripcion.style.color = document.getElementById('color').value;
+
+      const fuente = document.getElementById('fuente').value;
+      titulo.style.fontFamily = fuente;
+      descripcion.style.fontFamily = fuente;
+
+      const file = imagen.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          previewImg.src = e.target.result;
+          previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        previewImg.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
+editor miinimalista

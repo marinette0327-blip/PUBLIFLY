@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor - Plantilla Moderna Avanzada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fdf6f0;
+      color: #333;
+    }
+
+    header {
+      background: #f6bdc0;
+      border-bottom: 4px solid #e29578;
+      text-align: center;
+      padding: 30px;
+    }
+
+    header h1 {
+      color: #e29578;
+    }
+
+    .editor {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .toolbar {
+      background: #fff;
+      border: 2px solid #e29578;
+      padding: 15px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .toolbar label {
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .toolbar input, .toolbar select {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    #canvas {
+      position: relative;
+      width: 800px;
+      height: 450px;
+      margin: 0 auto;
+      background: linear-gradient(135deg,#ffecd2,#fcb69f);
+      border: 2px solid #e29578;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .editable {
+      position: absolute;
+      cursor: move;
+      padding: 5px;
+      font-size: 22px;
+      color: #333;
+      user-select: none;
+    }
+
+    .editable:focus {
+      outline: 2px dashed #e29578;
+      background: rgba(255,255,255,0.7);
+    }
+
+    img.draggable {
+      position: absolute;
+      cursor: move;
+      width: 120px;
+      user-select: none;
+    }
+
+    button {
+      background: #e29578;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #cf7f5c;
+    }
+
+    footer {
+      background: #f6bdc0;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+      border-top: 4px solid #e29578;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Editor Avanzado de Plantillas - PUBLIFLY</h1>
+    <nav>
+      <a href="index.html" style="text-decoration:none; color:#333;">← Volver a PUBLIFLY</a>
+    </nav>
+  </header>
+
+  <main class="editor">
+    <h2>🎨 Crea tu plantilla personalizada</h2>
+    <p>Agrega texto, imágenes PNG, cambia colores y tipos de letra como en Canva.</p>
+
+    <!-- Barra de herramientas -->
+    <div class="toolbar">
+      <div>
+        <label>Tipo de letra:</label>
+        <select id="fontSelector">
+          <option value="Poppins">Poppins</option>
+          <option value="Arial">Arial</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Courier New">Courier</option>
+          <option value="Comic Sans MS">Comic Sans</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Color de texto:</label>
+        <input type="color" id="textColor" value="#333333">
+      </div>
+
+      <div>
+        <label>Fondo:</label>
+        <input type="color" id="bgColor" value="#ffecd2">
+      </div>
+
+      <div>
+        <label>Agregar imagen PNG:</label>
+        <input type="file" id="imgUpload" accept="image/png">
+      </div>
+
+      <button onclick="addText()">➕ Agregar texto</button>
+    </div>
+
+    <!-- Zona de trabajo -->
+    <div id="canvas"></div>
+
+    <div style="margin-top:25px;">
+      <button onclick="descargar()">💾 Descargar plantilla</button>
+      <button onclick="limpiar()">🗑️ Limpiar todo</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 PUBLIFLY - Editor Avanzado</p>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const bgColor = document.getElementById('bgColor');
+    const fontSelector = document.getElementById('fontSelector');
+    const textColor = document.getElementById('textColor');
+    const imgUpload = document.getElementById('imgUpload');
+
+    // Cambiar color de fondo
+    bgColor.addEventListener('input', () => {
+      canvas.style.background = bgColor.value;
+    });
+
+    // Agregar texto editable
+    function addText() {
+      const text = document.createElement('div');
+      text.textContent = "Texto editable";
+      text.className = "editable";
+      text.contentEditable = true;
+      text.style.fontFamily = fontSelector.value;
+      text.style.color = textColor.value;
+      text.style.top = "50px";
+      text.style.left = "50px";
+      canvas.appendChild(text);
+      hacerArrastrable(text);
+    }
+
+    // Agregar imagen PNG
+    imgUpload.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.className = "draggable";
+        img.style.top = "100px";
+        img.style.left = "100px";
+        canvas.appendChild(img);
+        hacerArrastrable(img);
+      }
+    });
+
+    // Hacer elementos arrastrables
+    function hacerArrastrable(el) {
+      let offsetX, offsetY;
+      el.addEventListener('mousedown', e => {
+        offsetX = e.clientX - el.offsetLeft;
+        offsetY = e.clientY - el.offsetTop;
+        function mover(e) {
+          el.style.left = e.clientX - offsetX + 'px';
+          el.style.top = e.clientY - offsetY + 'px';
+        }
+        function soltar() {
+          document.removeEventListener('mousemove', mover);
+          document.removeEventListener('mouseup', soltar);
+        }
+        document.addEventListener('mousemove', mover);
+        document.addEventListener('mouseup', soltar);
+      });
+    }
+
+    // Limpiar todo
+    function limpiar() {
+      canvas.innerHTML = '';
+    }
+
+    // Descargar plantilla como imagen (solo simulación básica)
+    function descargar() {
+      alert("✨ En la versión completa podrás exportar tu plantilla como imagen PNG.");
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor - Tarjeta Profesional</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header>
+    <h1>Editor de Tarjeta Profesional</h1>
+    <nav>
+      <a href="index.html">← Volver a PUBLIFLY</a>
+    </nav>
+  </header>
+
+  <!-- Área principal -->
+  <main class="editor">
+    <h2>Personaliza tu Tarjeta</h2>
+    <p>Agrega tu nombre, cargo, contacto y colores para tu tarjeta profesional.</p>
+    
+    <form id="tarjetaForm" onsubmit="event.preventDefault(); actualizarTarjeta();">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" placeholder="Nombre completo">
+
+      <label for="cargo">Cargo:</label>
+      <input type="text" id="cargo" placeholder="Ej. Diseñador Gráfico">
+
+      <label for="telefono">Teléfono:</label>
+      <input type="tel" id="telefono" placeholder="Número de contacto">
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Correo electrónico">
+
+      <label for="colorFondo">Color de fondo:</label>
+      <input type="color" id="colorFondo" value="#ffffff">
+
+      <label for="colorTexto">Color del texto:</label>
+      <input type="color" id="colorTexto" value="#000000">
+
+      <button type="submit">Aplicar cambios</button>
+    </form>
+
+    <!-- Vista previa -->
+    <section id="preview" style="margin-top:30px; padding:20px; text-align:center; border-radius:12px; border:2px solid #ccc; width:100%; max-width:500px; margin:auto;">
+      <h2 id="previewNombre">Tu nombre aquí</h2>
+      <p id="previewCargo">Tu cargo</p>
+      <hr style="margin:10px 0;">
+      <p id="previewTelefono">Teléfono: ---</p>
+      <p id="previewEmail">Email: ---</p>
+    </section>
+  </main>
+
+  <!-- Pie -->
+  <footer>
+    <p>&copy; 2025 PUBLIFLY - Editor Tarjeta Profesional</p>
+  </footer>
+
+  <script>
+    const nombre = document.getElementById("nombre");
+    const cargo = document.getElementById("cargo");
+    const telefono = document.getElementById("telefono");
+    const email = document.getElementById("email");
+    const colorFondo = document.getElementById("colorFondo");
+    const colorTexto = document.getElementById("colorTexto");
+
+    const preview = document.getElementById("preview");
+    const previewNombre = document.getElementById("previewNombre");
+    const previewCargo = document.getElementById("previewCargo");
+    const previewTelefono = document.getElementById("previewTelefono");
+    const previewEmail = document.getElementById("previewEmail");
+
+    function actualizarTarjeta() {
+      preview.style.backgroundColor = colorFondo.value;
+      preview.style.color = colorTexto.value;
+      previewNombre.textContent = nombre.value || "Tu nombre aquí";
+      previewCargo.textContent = cargo.value || "Tu cargo";
+      previewTelefono.textContent = telefono.value ? "Teléfono: " + telefono.value : "Teléfono: ---";
+      previewEmail.textContent = email.value ? "Email: " + email.value : "Email: ---";
+    }
+  </script>
+
+</body>
+</html>

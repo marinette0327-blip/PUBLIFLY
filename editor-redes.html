@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor - Plantilla Redes Sociales</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fdf6f0;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #f8bb60;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    main.editor {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    form {
+      flex: 1;
+      min-width: 300px;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    form label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 0.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      padding: 0.8rem;
+      width: 100%;
+      background-color: #f39f30;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e67e22;
+    }
+
+    .preview {
+      flex: 1;
+      min-width: 300px;
+      background-color: #fff;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .preview h3 {
+      margin: 1rem 0;
+    }
+
+    .preview p {
+      font-size: 1rem;
+    }
+
+    .preview img {
+      max-width: 100%;
+      margin-top: 1rem;
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Editor de Plantilla Redes Sociales</h1>
+    <nav>
+      <a href="index.html">← Volver a PUBLIFLY</a>
+    </nav>
+  </header>
+
+  <main class="editor">
+    <form id="redesForm">
+      <h2>Personaliza tu Plantilla</h2>
+
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" placeholder="Escribe un título">
+
+      <label for="contenido">Contenido:</label>
+      <textarea id="contenido" placeholder="Agrega tu contenido"></textarea>
+
+      <label for="colorTexto">Color del texto:</label>
+      <input type="color" id="colorTexto" value="#333333">
+
+      <label for="colorFondo">Color de fondo:</label>
+      <input type="color" id="colorFondo" value="#ffffff">
+
+      <label for="fuente">Tipo de letra:</label>
+      <select id="fuente">
+        <option value="Poppins">Poppins</option>
+        <option value="Roboto">Roboto</option>
+        <option value="Montserrat">Montserrat</option>
+        <option value="Open Sans">Open Sans</option>
+        <option value="Lato">Lato</option>
+      </select>
+
+      <label for="imagen">Agregar imagen:</label>
+      <input type="file" id="imagen" accept="image/png, image/jpeg">
+
+      <button type="button" onclick="actualizarPreview()">Actualizar Vista</button>
+    </form>
+
+    <div class="preview" id="preview">
+      <h3 id="previewTitulo">Título de ejemplo</h3>
+      <p id="previewContenido">Aquí irá el contenido de tu publicación.</p>
+      <img id="previewImg" src="" alt="" style="display:none;">
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 PUBLIFLY - Editor Plantilla Redes Sociales</p>
+  </footer>
+
+  <script>
+    function actualizarPreview() {
+      const titulo = document.getElementById('titulo').value;
+      const contenido = document.getElementById('contenido').value;
+      const colorTexto = document.getElementById('colorTexto').value;
+      const colorFondo = document.getElementById('colorFondo').value;
+      const fuente = document.getElementById('fuente').value;
+      const imagen = document.getElementById('imagen').files[0];
+
+      const preview = document.getElementById('preview');
+      const previewTitulo = document.getElementById('previewTitulo');
+      const previewContenido = document.getElementById('previewContenido');
+      const previewImg = document.getElementById('previewImg');
+
+      previewTitulo.textContent = titulo || "Título de ejemplo";
+      previewContenido.textContent = contenido || "Aquí irá el contenido de tu publicación.";
+
+      previewTitulo.style.color = colorTexto;
+      previewContenido.style.color = colorTexto;
+      preview.style.backgroundColor = colorFondo;
+
+      previewTitulo.style.fontFamily = fuente;
+      previewContenido.style.fontFamily = fuente;
+
+      if(imagen) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          previewImg.src = e.target.result;
+          previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(imagen);
+      } else {
+        previewImg.style.display = 'none';
+      }
+    }
+  </script>
+
+</body>
+</html>

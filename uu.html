@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎨 Publifly Editor - 10 Usos Gratis</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* { box-sizing: border-box; font-family: 'Poppins', sans-serif; margin:0; padding:0; }
+
+body {
+  background: linear-gradient(135deg,#ffdee9,#b5fffc);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#main {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 400px;
+}
+
+h1 {
+  color: #ff4081;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+}
+
+button {
+  background: #ff4081;
+  border: none;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 10px;
+}
+
+button:hover { transform: scale(1.05); }
+
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.popup {
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.popup h2 {
+  color: #ff4081;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.close-btn {
+  background: #ff4081;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.payment-options { text-align: left; margin: 12px 0; }
+
+@media(max-width: 500px){
+  h1 { font-size: 1.3rem; }
+  button { padding: 10px 16px; font-size: 0.9rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="main">
+  <h1>🎉 Bienvenido a Publifly 🎉</h1>
+  <p>Usos restantes: <span id="uses">10</span></p>
+  <button id="useBtn">Usar servicio</button>
+  <br>
+  <button id="adminBtn">🔑 PubliAdmins</button>
+</div>
+
+<!-- POPUP -->
+<div id="overlay">
+  <div class="popup">
+    <h2 id="popupTitle">Suscríbete a Publifly</h2>
+    <p id="popupText">Tu prueba ha finalizado. Elige un plan o ingresa como admin.</p>
+
+    <!-- FORM PAGO -->
+    <div id="paymentForm">
+      <div class="payment-options">
+        <label><input type="radio" name="plan" value="semana"> Plan semanal - $3</label><br>
+        <label><input type="radio" name="plan" value="mensual"> Plan mensual - $10</label><br>
+        <label><input type="radio" name="plan" value="anual"> Plan anual - $90</label>
+      </div>
+      <input class="input-field" type="text" placeholder="Nombre completo">
+      <input class="input-field" type="text" placeholder="Número de tarjeta (simulado)">
+      <button class="close-btn" id="payBtn">Pagar</button>
+    </div>
+
+    <!-- FORM ADMIN -->
+    <div id="adminForm" style="display:none;">
+      <input class="input-field" type="password" id="adminPass" placeholder="Contraseña de admin">
+      <button class="close-btn" id="checkAdmin">Ingresar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const USES_KEY = 'publifly_uses';
+const SUB_KEY = 'publifly_subscribed';
+const ADMIN_KEY = 'publifly_is_admin';
+const ADMIN_PASS = '27032008';
+
+const useBtn = document.getElementById('useBtn');
+const usesDisplay = document.getElementById('uses');
+const overlay = document.getElementById('overlay');
+const popupTitle = document.getElementById('popupTitle');
+const popupText = document.getElementById('popupText');
+const paymentForm = document.getElementById('paymentForm');
+const adminForm = document.getElementById('adminForm');
+const payBtn = document.getElementById('payBtn');
+const adminBtn = document.getElementById('adminBtn');
+const checkAdmin = document.getElementById('checkAdmin');
+const adminPass = document.getElementById('adminPass');
+
+// Inicialización de usos
+if (!localStorage.getItem(USES_KEY)) localStorage.setItem(USES_KEY,'10');
+
+// Funciones
+function updateUsesUI(){
+  let uses = parseInt(localStorage.getItem(USES_KEY),10);
+  if(isSubscribed()||isAdmin()){ usesDisplay.textContent='∞'; return; }
+  usesDisplay.textContent = uses;
+  if(uses<=0) useBtn.disabled=true;
+}
+
+function isSubscribed(){ return localStorage.getItem(SUB_KEY)==='true'; }
+function isAdmin(){ return localStorage.getItem(ADMIN_KEY)==='true'; }
+
+function consumeUse(){
+  if(isSubscribed()||isAdmin()){ alert('🎨 ¡Acceso PRO!'); return; }
+  let uses = parseInt(localStorage.getItem(USES_KEY),10);
+  uses--;
+  localStorage.setItem(USES_KEY,String(uses));
+  updateUsesUI();
+  if(uses<=0){ showPaymentPopup(); }
+  else { alert(`🎨 Has usado Publifly. Te quedan ${uses} usos.`); }
+}
+
+function showPaymentPopup(){
+  overlay.style.display='flex';
+  paymentForm.style.display='block';
+  adminForm.style.display='none';
+  popupTitle.textContent='Tu prueba ha finalizado';
+  popupText.textContent='Suscríbete para seguir usando Publifly 💖';
+}
+
+function closePopup(){ overlay.style.display='none'; updateUsesUI(); }
+
+function tryAdminLogin(){
+  if(adminPass.value===ADMIN_PASS){
+    localStorage.setItem(SUB_KEY,'true');
+    localStorage.setItem(ADMIN_KEY,'true');
+    alert('✨ Bienvenidas PubliAdmins ✨');
+    closePopup();
+  } else { alert('❌ Contraseña incorrecta'); }
+}
+
+function simulatePayment(){
+  localStorage.setItem(SUB_KEY,'true');
+  alert('💖 ¡Genial! Ahora eres miembro oficial de Publifly 💖');
+  closePopup();
+}
+
+// Eventos
+useBtn.addEventListener('click', consumeUse);
+adminBtn.addEventListener('click', ()=>{
+  overlay.style.display='flex';
+  paymentForm.style.display='none';
+  adminForm.style.display='block';
+  popupTitle.textContent='Acceso de PubliAdmins';
+  popupText.textContent='Solo administradoras autorizadas 💼';
+});
+checkAdmin.addEventListener('click', tryAdminLogin);
+payBtn.addEventListener('click', simulatePayment);
+
+overlay.addEventListener('click',(e)=>{ if(e.target===overlay) closePopup(); });
+
+updateUsesUI();
+</script>
+
+</body>
+</html>

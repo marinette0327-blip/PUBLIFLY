@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>PUBLIFLY</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
+   <link rel="stylesheet" href="editor-logo.html">
+   <link rel="payme" href="pago.html">
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header>
+  <div class="logo-banner">
+  <img src="publii xd.png" alt="Logo Publifly">
+</div>
+
+
+    <h1>PUBLIFLY</h1>
+    <p>¡Promociona tus productos con nosotros! Llega a miles de clientes hoy.</p>
+    <nav>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#diseno">Diseño</a>
+      <a href="#plantillas">Plantillas</a>
+      <a href="#marketing">Marketing</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a href="#plantillas" class="boton">Empieza ahora</a>
+  </header>
+
+<!-- Banner con carrusel -->
+<section class="banner">
+  <div class="carrusel">
+    <div class="slide active">
+      <img src="uvuu.jpg" alt="Sistemas informáticos">
+    </div>
+    <div class="slide">
+      <img src="uvuu.jpg" alt="Marketing digital">
+    </div>
+    <div class="slide">
+      <img src="" alt="Diseño gráfico">
+    </div>
+
+    <!-- Controles -->
+    <a class="prev">&#10094;</a>
+    <a class="next">&#10095;</a>
+  </div>
+</section>
+
+
+  <!-- Beneficios -->
+  <section id="beneficios" class="beneficios">
+    <h2>Accesibilidad a más clientes</h2>
+    <div class="card">
+      <h3>Visibilidad</h3>
+      <p>Tu producto estará a la vista de más personas.</p>
+    </div>
+    <div class="card">
+      <h3>Alcance</h3>
+      <p>Tus productos llegarán a más clientes potenciales.</p>
+    </div>
+    <div class="card">
+      <h3>Actualización de servicios</h3>
+      <p>Mantén tus servicios siempre al día con nosotros.</p>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section id="servicios" class="servicios">
+    <h2>Nuestros Servicios</h2>
+    <ul>
+      <li>Plantillas creativas editables</li>
+      <li>Publicidad en redes sociales</li>
+      <li>Diseño de logotipos y anuncios</li>
+      <li>Estrategias de marketing digital</li>
+    </ul>
+  </section>
+
+  <!-- Diseño -->
+<section id="diseno" class="diseno">
+  <h2>Diseño gráfico</h2>
+  <p>Explora nuestros diseños listos para personalizar: logos, tarjetas, afiches y más.</p>
+  <div class="galeria">
+    <div class="plantilla-card">
+      <img src="1.jpg" alt="Logo creativo">
+      <h3>Logo Creativo</h3>
+      <a href="editor-logo.html" target="_self" class="boton">Editar</a>
+      
+    </div>
+    <div class="plantilla-card">
+      <img src="2.jpg" alt="Flyer publicitario">
+      <h3>Flyer Publicitario</h3>
+      <a href="editor-flyer.html" target="_self" class="boton">Editar</a>
+    </div>
+    <div class="plantilla-card">
+      <img src="3.jpg" alt="Tarjeta profesional">
+      <h3>Tarjeta Profesional</h3>
+      <a href="editor-tarjeta.html" target="_self" class="boton">Editar</a>
+    </div>
+  </div>
+</section>
+
+<!-- Plantillas -->
+<section id="plantillas" class="plantillas">
+  <h2>Plantillas editables</h2>
+  <p>Elige una plantilla y personalízala fácilmente con nuestro editor online.</p>
+  <div class="galeria">  
+    <div class="plantilla-card">
+      <img src="4.jpg" alt="Plantilla moderna">
+      <h3>Plantilla Moderna</h3>
+      <a href="editor-moderna.html" target="_self" class="boton">Editar</a>
+    </div>
+    <div class="plantilla-card">
+      <img src="5.jpg" alt="Plantilla minimalista">
+      <h3>Plantilla Minimalista</h3>
+      <a href="editor-minimalista.html" target="_self" class="boton">Editar</a>
+    </div>
+    <div class="plantilla-card">
+      <img src="6.jpg" alt="Plantilla redes sociales">
+      <h3>Plantilla Redes Sociales</h3>
+      <a href="editor-redes.html" target="_self" class="boton">Editar</a>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Marketing -->
+  <section id="marketing" class="marketing">
+    <h2>Estrategias de Marketing</h2>
+    <p>Accede a recursos y estrategias digitales para impulsar tu negocio.</p>
+    <ul>
+      <li>Campañas de Facebook Ads</li>
+      <li>Publicidad en Instagram</li>
+      <li>Gestión de Google Ads</li>
+      <li>Email marketing profesional</li>
+    </ul>
+    <a href="plan-marketing.html" class="boton">Ver planes</a>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="contacto">
+    <h2>Contáctanos</h2>
+    <form>
+      <input type="text" placeholder="Tu nombre" required>
+      <input type="email" placeholder="Tu correo electrónico" required>
+      <textarea placeholder="Tu mensaje" required></textarea>
+      <button type="submit">Enviar mensaje</button>
+    </form>
+  </section>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>&copy; 2025 PUBLIFLY - Todos los derechos reservados.</p>
+  </footer>
+  <script>
+/* CONFIG */
+const VISIT_KEY = 'publifly_visits';
+const MAX_FREE_VISITS = 10;
+const SUBSCRIBED_KEY = 'publifly_subscribed';
+let visits = parseInt(localStorage.getItem('publifly_visits') || '0');
+visits = 11; // 🔥 Forzar que pase el límite
+localStorage.setItem('publifly_visits', visits);
+showPaymentPopup(); // Llamar directo al popup
+
+/* DEV: forzar popup para pruebas (true = aparece siempre) */
+const DEV_FORCE_POPUP = false;
+
+/* Lógica de carga/chequeo de visitas */
+window.addEventListener('load', () => {
+  const isSubscribed = localStorage.getItem(SUBSCRIBED_KEY) === 'true';
+  if (isSubscribed) return;
+
+  let visits = parseInt(localStorage.getItem(VISIT_KEY) || '0');
+  visits++;
+  localStorage.setItem(VISIT_KEY, visits);
+
+  if (DEV_FORCE_POPUP || visits > MAX_FREE_VISITS) showPaymentPopup();
+});
+
+/* Mostrar popup con opciones y formulario (tarjeta, PayPal, crypto) */
+function showPaymentPopup() {
+  const overlay = document.createElement('div');
+  overlay.id = 'pf-overlay';
+  overlay.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:10000;`;
+
+  const modal = document.createElement('div');
+  modal.style.cssText = `width:520px;max-width:95%;background:#fff;border-radius:12px;padding:20px;font-family:inherit;box-shadow:0 12px 40px rgba(0,0,0,0.35);`;
+  modal.innerHTML = `
+    <h2 style="margin:0 0 8px;color:#ff69b4;text-align:center">Suscríbete a PUBLIFLY PRO</h2>
+    <p style="text-align:center;margin:0 0 12px">Tienes ${MAX_FREE_VISITS} usos gratuitos. Elige un plan y método de pago.</p>
+
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:12px;">
+      <label><input type="radio" name="plan" value="Semana" checked> Semana<br><small>19.99 Bs.</small></label>
+      <label><input type="radio" name="plan" value="Mes"> Mes<br><small>29.99 Bs.</small></label>
+      <label><input type="radio" name="plan" value="Año"> Año<br><small>49.99 Bs.</small></label>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <input id="payName" placeholder="Nombre completo" style="flex:1;padding:8px;border:1px solid #eee;border-radius:6px">
+      <input id="payEmail" type="email" placeholder="Correo" style="flex:1;padding:8px;border:1px solid #eee;border-radius:6px">
+    </div>
+
+    <div style="margin-bottom:12px;">
+      <label style="display:block;margin-bottom:6px">Método de pago</label>
+      <select id="payMethod" style="width:100%;padding:8px;border-radius:6px;border:1px solid #eee">
+        <option value="card">Tarjeta de crédito</option>
+        <option value="paypal">PayPal</option>
+        <option value="crypto">Criptomoneda</option>
+      </select>
+    </div>
+
+    <div id="cardFields" style="display:block;margin-bottom:12px">
+      <input id="cardNumber" placeholder="Número de tarjeta (xxxx xxxx xxxx xxxx)" maxlength="19" style="width:100%;padding:8px;border:1px solid #eee;border-radius:6px;margin-bottom:8px">
+      <div style="display:flex;gap:8px">
+        <input id="cardExpiry" placeholder="MM/AA" maxlength="5" style="flex:1;padding:8px;border:1px solid #eee;border-radius:6px">
+        <input id="cardCvc" placeholder="CVC" maxlength="4" style="width:120px;padding:8px;border:1px solid #eee;border-radius:6px">
+      </div>
+    </div>
+
+    <div id="paypalInfo" style="display:none;margin-bottom:12px">
+      <small>Serás redirigido a PayPal (simulado).</small>
+    </div>
+
+    <div id="cryptoInfo" style="display:none;margin-bottom:12px">
+      <small>Aceptamos BTC/ETH (simulado). Sigue las instrucciones en pantalla.</small>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:6px">
+      <button id="confirmPayment" style="flex:1;padding:10px;border-radius:8px;border:none;background:#ff69b4;color:#fff;font-weight:700;cursor:pointer">Pagar</button>
+      <button id="cancelPayment" style="padding:10px;border-radius:8px;border:1px solid #ddd;background:#fff;cursor:pointer">Cancelar</button>
+    </div>
+  `;
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  document.body.style.pointerEvents = 'none';
+  modal.style.pointerEvents = 'auto';
+
+  /* mostrar/ocultar campos según método */
+  const payMethod = modal.querySelector('#payMethod');
+  const cardFields = modal.querySelector('#cardFields');
+  const paypalInfo = modal.querySelector('#paypalInfo');
+  const cryptoInfo = modal.querySelector('#cryptoInfo');
+
+  payMethod.addEventListener('change', () => {
+    const v = payMethod.value;
+    cardFields.style.display = v === 'card' ? 'block' : 'none';
+    paypalInfo.style.display = v === 'paypal' ? 'block' : 'none';
+    cryptoInfo.style.display = v === 'crypto' ? 'block' : 'none';
+  });
+
+  /* enmascarado y formateo input tarjeta */
+  const cardNumber = modal.querySelector('#cardNumber');
+  cardNumber.addEventListener('input', (e) => {
+    let val = e.target.value.replace(/\D/g,'').slice(0,16);
+    let parts = [];
+    for (let i=0;i<val.length;i+=4) parts.push(val.slice(i,i+4));
+    e.target.value = parts.join(' ');
+  });
+
+  const cardExpiry = modal.querySelector('#cardExpiry');
+  cardExpiry.addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g,'').slice(0,4);
+    if (v.length >= 3) e.target.value = v.slice(0,2) + '/' + v.slice(2);
+    else e.target.value = v;
+  });
+
+  /* validaciones */
+  function luhnCheck(num) {
+    const digits = num.replace(/\s/g,'').split('').reverse().map(d => +d);
+    let sum = 0;
+    for (let i=0;i<digits.length;i++){
+      let d = digits[i];
+      if (i % 2 === 1) { d = d*2; if (d>9) d -= 9; }
+      sum += d;
+    }
+    return sum % 10 === 0;
+  }
+
+  function validateCardFields() {
+    const num = cardNumber.value.replace(/\s/g,'');
+    if (num.length < 13 || num.length > 16) { alert('Número de tarjeta inválido'); return false; }
+    if (!luhnCheck(num)) { alert('Número de tarjeta no pasó validación'); return false; }
+    const exp = cardExpiry.value.split('/');
+    if (exp.length !==2) { alert('Fecha de expiración inválida'); return false; }
+    const mm = parseInt(exp[0],10), yy = parseInt(exp[1],10);
+    if (!(mm >=1 && mm <=12)) { alert('Mes inválido'); return false; }
+    const now = new Date();
+    const fullYear = 2000 + yy;
+    const expDate = new Date(fullYear, mm);
+    if (expDate <= now) { alert('Tarjeta expirada'); return false; }
+    if (!/^\d{3,4}$/.test(modal.querySelector('#cardCvc').value)) { alert('CVC inválido'); return false; }
+    return true;
+  }
+
+  /* Confirmar pago (simulado) */
+  modal.querySelector('#confirmPayment').onclick = async () => {
+    const name = modal.querySelector('#payName').value.trim();
+    const email = modal.querySelector('#payEmail').value.trim();
+    if (!name || !email) { alert('Completa nombre y email'); return; }
+
+    const plan = modal.querySelector('input[name="plan"]:checked').value;
+    const method = payMethod.value;
+    let amount = plan === 'Semana' ? 2.99 : plan === 'Mes' ? 9.99 : 99.99;
+
+    if (method === 'card') {
+      if (!validateCardFields()) return;
+      // Simular tokenización y cobro
+      await fakeProcessing();
+      finalizeSubscription({name,email,plan,method,amount});
+    } else if (method === 'paypal') {
+      // simular redirección PayPal
+      if (!confirm(`Simular pago PayPal por $${amount}?`)) return;
+      await fakeProcessing();
+      finalizeSubscription({name,email,plan,method,amount});
+    } else if (method === 'crypto') {
+      if (!confirm(`Simular pago Crypto por $${amount}?`)) return;
+      await fakeProcessing();
+      finalizeSubscription({name,email,plan,method,amount});
+    }
+  };
+
+  modal.querySelector('#cancelPayment').onclick = () => {
+    document.body.removeChild(overlay);
+    document.body.style.pointerEvents = 'auto';
+  };
+
+  function fakeProcessing() {
+    return new Promise(res => setTimeout(res, 700)); // efecto espera
+  }
+
+  function finalizeSubscription(info) {
+    // guardar suscripción (frontend)
+    localStorage.setItem(SUBSCRIBED_KEY, 'true');
+    // opcional: guardar info del usuario de forma local para demo
+    localStorage.setItem('publifly_subscriber_info', JSON.stringify(info));
+    alert(`✅ Pago simulado OK\n\nPlan: ${info.plan}\nMonto: $${info.amount}\nMétodo: ${info.method}`);
+    const ov = document.getElementById('pf-overlay');
+    if (ov) document.body.removeChild(ov);
+    document.body.style.pointerEvents = 'auto';
+  }
+}
+</script>
+
+  
+  
+  
